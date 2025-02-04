@@ -1,0 +1,8 @@
+<div class="w-full h-screen bg-base-300 flex flex-col">
+  @if (!isMobile) {
+    <app-navbar [props]="navbarData"></app-navbar>
+  }
+  <div class="flex-grow">
+    <router-outlet></router-outlet>
+  </div>
+</div>
