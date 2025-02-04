@@ -1,6 +1,6 @@
 /*
  * Example GET query:
- *   curl "http://localhost:3000/api/movies?page=1&limit=10"
+ *   curl "http://localhost:3000/api/v1/movies?page=1&limit=10"
 */
 
 const express = require('express');
@@ -29,7 +29,7 @@ const movieSchema = new mongoose.Schema({
 
 const Movie = mongoose.model('Movie', movieSchema);
 
-app.get('/api/movies', async (req, res) => {
+app.get('/api/v1/movies', async (req, res) => {
   try {
     let { page = 1, limit = 10 } = req.query;
     page = parseInt(page, 10);
