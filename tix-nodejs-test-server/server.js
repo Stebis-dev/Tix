@@ -59,6 +59,26 @@ app.get('/api/v1/movies', async (req, res) => {
   }
 });
 
+app.get('/api/v1/movies/:id', async (req, res) => {
+  try {
+    const movieId = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(movieId)) {
+      return res.status(400).json({ message: 'Invalid movie ID' });
+    }
+
+    const movie = await Movie.findById(movieId);
+    if (!movie) {
+      return res.status(404).json({ message: 'Movie not found' });
+    }
+
+    res.json(movie);
+  } catch (err) {
+    console.error('Error fetching movie:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
 app.get('/api/v1/library/search', async (req, res) => {
   try {
     let { name, page = 1, limit = 10 } = req.query;
