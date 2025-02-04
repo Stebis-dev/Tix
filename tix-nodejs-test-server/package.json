@@ -1,0 +1,16 @@
+{
+  "name": "tix-nodejs-test-server",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "node .\\server.js",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.9.6"
+  }
+}
