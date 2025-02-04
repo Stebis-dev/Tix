@@ -47,7 +47,7 @@ app.get('/api/v1/movies', async (req, res) => {
     }
 
     const skip = (page - 1) * limit;
-    const movies = await Movie.find().sort({ year: -1 }).skip(skip).limit(limit);
+    const movies = await Movie.find().sort({ year: 1 }).skip(skip).limit(limit);
     const totalMovies = await Movie.countDocuments();
     const totalPages = Math.ceil(totalMovies / limit);
 
