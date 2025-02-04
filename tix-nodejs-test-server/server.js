@@ -59,7 +59,7 @@ app.get('/api/v1/movies', async (req, res) => {
   }
 });
 
-app.get('/v1/library/search', async (req, res) => {
+app.get('/api/v1/library/search', async (req, res) => {
   try {
     let { name, page = 1, limit = 10 } = req.query;
     if (!name) {
