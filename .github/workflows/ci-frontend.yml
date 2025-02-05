@@ -73,7 +73,7 @@ jobs:
 
       - name: Build
         working-directory: tix-angular-client
-        run: npm run build -- --configuration production
+        run: npm run build -- --configuration production --base-href /Tix/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
