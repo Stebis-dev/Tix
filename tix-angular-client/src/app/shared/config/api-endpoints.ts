@@ -1,5 +1,7 @@
+import { environment } from '@ntx/environments/environment';
+
 export const SERVER = {
-  baseUrl: '/api',
+  baseUrl: environment.api.serverUrl + '/api',
   endpoints: {
     movies: {
       movies: '/v1/movies',
