@@ -27,7 +27,7 @@ C --> |Get data|D[(Atlas)]
    {
      "IsEncrypted": false,
      "Values": {
-       <..>
+       ...
        "DB_CONN_STRING": "mongo_db_connections_string",
        "DB_NAME": "mongo_db_name",
        "COLLECTION_NAME": "mongo_db_collection_name"
