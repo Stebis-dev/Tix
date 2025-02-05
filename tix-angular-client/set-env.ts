@@ -11,9 +11,7 @@ const targetEnvPath = './src/environments/environment.ts';
 const targetDevEnvPath = './src/environments/environment.development.ts';
 
 const envConfigFile = (isProduction = true) =>
-  `import { FakeAuthServiceConfig } from '@ntx-auth/classes/fake-auth.service';
-import { OAuth2ServiceConfig } from '@ntx-auth/classes/oauth2.service';
-
+  `
 export const environment = {
   production: ${isProduction},
   development: ${!isProduction},
@@ -33,7 +31,7 @@ const proxyConfigFile = (isProduction = true) =>
     "secure": true,
     "changeOrigin": true,
     "logLevel": "${isProduction ? '' : 'debug'}"
-  },
+  }
 }`;
 
 (async () => {
