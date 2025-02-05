@@ -23,6 +23,8 @@ name: Deploy Node.js project to Azure Function App
 on:
   push:
     branches: ["main"]
+    paths: 
+      - 'azure/**'
 
 env:
   AZURE_FUNCTIONAPP_NAME: 'WSG'   # set this to your function app name on Azure
