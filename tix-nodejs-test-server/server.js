@@ -51,7 +51,7 @@ app.get('/api/v1/movies', async (req, res) => {
     Movie.find()
       .limit(limit)
       .skip((page - 1) * limit)
-      .sort({ year: -1 })
+      .sort({ year: -1, title: 1, _id: 1 })
       .exec()
       .then(movies => {
         return Movie.countDocuments().exec().then(count => {
