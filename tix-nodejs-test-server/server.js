@@ -47,12 +47,25 @@ app.get('/api/v1/movies', async (req, res) => {
         .json({ message: 'Invalid pagination parameters. "page" and "limit" must be positive numbers.' });
     }
 
-    const skip = (page - 1) * limit;
-    const movies = await Movie.find().sort({ year: -1 }).skip(skip).limit(limit);
-    const totalMovies = await Movie.countDocuments();
-    const totalPages = Math.ceil(totalMovies / limit);
-
-    res.json({ page, limit, totalPages, totalMovies, movies });
+    Movie.find()
+      .limit(limit)
+      .skip((page - 1) * limit)
+      .sort({ year: -1 })
+      .exec()
+      .then(movies => {
+        return Movie.countDocuments().exec().then(count => {
+          res.json({
+            page,
+            limit,
+            totalPages: Math.ceil(count / limit),
+            totalMovies: count,
+            movies
+          });
+        });
+      })
+      .catch(err => {
+        res.status(500).json({ error: err.message });
+      });
   } catch (err) {
     console.error('Error fetching movies:', err);
     res.status(500).json({ message: 'Server error' });
@@ -85,7 +98,7 @@ app.get('/api/v1/library/search', async (req, res) => {
     if (!name) {
       return res.status(400).json({ message: 'Query parameter "name" is required.' });
     }
-    
+
     page = parseInt(page, 10);
     limit = parseInt(limit, 10);
     if (isNaN(page) || isNaN(limit) || page < 1 || limit < 1) {
