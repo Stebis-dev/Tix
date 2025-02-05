@@ -15,7 +15,6 @@ import { ActivatedRoute } from '@angular/router';
 export class MovieListComponent implements OnInit {
   title = 'TIX';
   redirectUrl = '';
-  skeletonNumber: number[] = Array.from({ length: 20 }, (_, i) => i);
   movies: MovieDTO[] = [];
 
   currentPage = 1;
