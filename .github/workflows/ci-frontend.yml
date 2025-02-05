@@ -75,6 +75,10 @@ jobs:
         working-directory: tix-angular-client
         run: npm run build -- --configuration production --base-href /Tix/
 
+      - name: Copy index.html to 404.html
+        working-directory: tix-angular-client/dist/tix-client/browser
+        run: cp index.html 404.html
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
