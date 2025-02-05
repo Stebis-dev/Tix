@@ -72,6 +72,8 @@ export class NavbarComponent {
   onMovieSelected(movie: SearchResultDTO) {
     if (movie == null || movie.id == null) return;
 
-    this.router.navigate(['/view/movie', movie.id]);
+    this.router.navigate(['/view/movie', movie.id]).then(() => {
+      window.location.reload();
+    });
   }
 }
