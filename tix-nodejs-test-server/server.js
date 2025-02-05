@@ -51,7 +51,7 @@ app.get('/api/v1/movies', async (req, res) => {
     Movie.find()
       .limit(limit)
       .skip((page - 1) * limit)
-      .sort({ year: -1 })
+      .sort({ year: -1, title: 1, _id: 1 })
       .exec()
       .then(movies => {
         return Movie.countDocuments().exec().then(count => {
@@ -110,7 +110,7 @@ app.get('/api/v1/library/search', async (req, res) => {
 
     const skip = (page - 1) * limit;
     const regex = new RegExp(name, 'i');
-    const movies = await Movie.find({ title: regex }).sort({ year: -1 }).skip(skip).limit(limit);
+    const movies = await Movie.find({ title: regex }).sort({ year: -1, title: 1, _id: 1 }).skip(skip).limit(limit);
     const totalMovies = await Movie.countDocuments({ title: regex });
     const totalPages = Math.ceil(totalMovies / limit);
 
