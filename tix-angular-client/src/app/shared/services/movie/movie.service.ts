@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { getMovieBackdropUrl, getMoviePosterUrl, getMoviePublishedUrl, getMovieUrl } from '@ntx-shared/config/api-endpoints';
+import { getMovieBackdropUrl, getMoviePosterUrl, getMoviePublishedUrl, getMoviesOnPage, getMovieUrl } from '@ntx-shared/config/api-endpoints';
 import { IMovieService } from './IMovie.service.interface';
 import { MovieDTOMapper } from '@ntx-shared/mappers/MovieDTO.mapper';
 import { MovieDTO, UpdateMovieDTO } from '@ntx-shared/models/movie.dto';
@@ -62,16 +62,24 @@ export class MovieService implements IMovieService {
     );
   }
 
-  getMovies(): Observable<MovieDTO[]> {
-    const url = getMovieUrl();
-
+  getMovies(page?: number): Observable<{
+    movies: MovieDTO[];
+    page: number;
+    totalPages: number;
+  }> {
+    page = page ?? 1;
+    const url = getMoviesOnPage(page);
     const httpOptions = {};
 
     return this.http.get(url, httpOptions).pipe(
       map((response: any) => {
         const { page, limit, totalMovies, totalPages, movies } = response;
 
-        return MovieDTOMapper.anyToMovieDTOArray(movies);
+        return {
+          movies: MovieDTOMapper.anyToMovieDTOArray(movies),
+          page,
+          totalPages,
+        };
       }),
       catchError((error) => {
         if (environment.development) console.error('Error fetching movie metadata:', error);

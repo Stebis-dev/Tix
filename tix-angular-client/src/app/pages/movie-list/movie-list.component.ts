@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MovieCardComponent } from '@ntx/app/pages/movie-list/movie-card/movie-card.component';
 import { MovieService } from '@ntx-shared/services/movie/movie.service';
 import { MovieDTO } from '@ntx-shared/models/movie.dto';
@@ -13,12 +13,15 @@ import { ActivatedRoute } from '@angular/router';
   imports: [MovieCardComponent],
 })
 export class MovieListComponent implements OnInit {
-  title = 'Tix';
+  title = 'TIX';
   redirectUrl = '';
   skeletonNumber: number[] = Array.from({ length: 20 }, (_, i) => i);
   movies: MovieDTO[] = [];
 
-  isLoadingMovies: boolean = true;
+  currentPage = 1;
+  totalPages = 1;
+  isLoadingMovies = false;
+
   constructor(
     private readonly movieService: MovieService,
     private readonly route: ActivatedRoute,
@@ -30,11 +33,29 @@ export class MovieListComponent implements OnInit {
       this.redirectUrl = data['movieCardRedirect'] ?? '';
     });
 
-    this.movieService.getMovies().subscribe({
+    this.loadMovies();
+
+    (window as any).myscroll = {}; // TODO: Remove this line
+  }
+
+  loadMovies() {
+    if (this.isLoadingMovies) return;
+
+    this.isLoadingMovies = true;
+
+    this.movieService.getMovies(this.currentPage).subscribe({
       next: (response) => {
         if (environment.development) console.log('Get movies:', response);
-        this.movies = response;
-        this.movies.sort((a, b) => new Date(b.originallyReleasedAt).getTime() - new Date(a.originallyReleasedAt).getTime());
+
+        if (this.currentPage === 1) {
+          this.movies = response.movies;
+        } else {
+          this.movies = [...this.movies, ...response.movies];
+        }
+        const uniqueMovieIds = new Set(this.movies.map((movie) => movie.id));
+        this.movies = this.movies.filter((movie) => uniqueMovieIds.has(movie.id));
+
+        this.totalPages = response.totalPages;
         this.isLoadingMovies = false;
       },
       error: (errorResponse) => {
@@ -53,5 +74,19 @@ export class MovieListComponent implements OnInit {
     if (this.redirectUrl == 'inspect/movie' || movie.isPublished) return true;
 
     return false;
+  }
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const threshold = 2000;
+    const position = window.innerHeight + window.scrollY;
+    const height = document.body.scrollHeight;
+
+    if (position >= height - threshold) {
+      if (!this.isLoadingMovies && this.currentPage < this.totalPages) {
+        this.currentPage++;
+        this.loadMovies();
+      }
+    }
   }
 }

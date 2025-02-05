@@ -23,6 +23,10 @@ export function getMovieUrl(_id?: string): string {
   return url;
 }
 
+export function getMoviesOnPage(page: number): string {
+  return `${SERVER.baseUrl}${SERVER.endpoints.movies.movies}?page=${page}&limit=50`;
+}
+
 export function getMoviePublishedUrl(_id: string): string {
   return `${SERVER.baseUrl}${SERVER.endpoints.movies.movies}/${_id}/published`;
 }
