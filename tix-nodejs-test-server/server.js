@@ -1,7 +1,8 @@
 /*
  * Example GET query:
  *   curl "http://localhost:3000/api/v1/movies?page=1&limit=10"
- *   curl "http://localhost:3000/v1/library/search?name=avengers"
+ *   curl "http://localhost:3000/api/v1/movies/5f1c3f9b8b6
+ *   curl "http://localhost:3000/api/v1/library/search?name=avengers"
  */
 
 const express = require('express');
