@@ -30,8 +30,10 @@ let Movie: Model<IMovie>;
 export async function movies(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     context.log(`Http function processed request for url "${request.url}"`);
 
-    let page = parseInt(request.query["page"] as string || '1', 10);
-    let limit = parseInt(request.query["limit"] as string || '10', 10);
+    let page = parseInt(request.query.get("page") || '1', 10);
+    let limit = parseInt(request.query.get("limit") || '10', 10);
+
+    console.log(`Fetching movies with page: ${page}, limit: ${limit}`);
 
     if (isNaN(page) || isNaN(limit) || page < 1 || limit < 1) {
         return {
@@ -45,7 +47,7 @@ export async function movies(request: HttpRequest, context: InvocationContext): 
     const movies = await Movie.find()
         .limit(limit)
         .skip((page - 1) * limit)
-        .sort({ year: -1 })
+        .sort({ year: -1, title: 1, _id: 1 })
 
     const totalMovies = await Movie.countDocuments();
     const totalPages = Math.ceil(totalMovies / limit);
@@ -115,7 +117,7 @@ export async function searchMovies(request: HttpRequest, context: InvocationCont
     const movies = await Movie.find(query)
         .limit(limit)
         .skip((page - 1) * limit)
-        .sort({ year: -1 });
+        .sort({ year: -1, title: 1, _id: 1 })
 
     const totalMovies = await Movie.countDocuments(query);
     const totalPages = Math.ceil(totalMovies / limit);

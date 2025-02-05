@@ -1,6 +1,10 @@
 # Tix movie library
 
-A simplified movie library from [Netix](https://github.com/winqus/NETIX)
+A simplified movie library from [Netix](https://github.com/winqus/NETIX).
+
+Data visualized in movie library can be access from [here](https://github.com/prust/wikipedia-movie-data/blob/master/movies.json).
+
+Access movie library [here](https://stebis-dev.github.io/Tix/).
 
 ## Conceptual system architecture
 
@@ -8,7 +12,7 @@ A simplified movie library from [Netix](https://github.com/winqus/NETIX)
 flowchart TD
 A[Angular] -->|Compiled page| B
 B[GitHub pages] -->|Request Data| C[Azure function]
-C --> |Get data|D[(Atlas)]
+C --> |Get data|D[(MongoDB Atlas)]
 
 ```
 
