@@ -33,8 +33,6 @@ export class MovieListComponent implements OnInit {
     });
 
     this.loadMovies();
-
-    (window as any).myscroll = {}; // TODO: Remove this line
   }
 
   loadMovies() {

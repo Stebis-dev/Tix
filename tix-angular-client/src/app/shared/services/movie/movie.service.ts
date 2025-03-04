@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { getMovieBackdropUrl, getMoviePosterUrl, getMoviePublishedUrl, getMoviesOnPage, getMovieUrl } from '@ntx-shared/config/api-endpoints';
