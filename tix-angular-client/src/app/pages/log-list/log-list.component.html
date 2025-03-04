@@ -1,0 +1,22 @@
+<div class="overflow-x-auto">
+  <table class="table w-full">
+    <thead>
+      <tr>
+        @for (column of columns; track column) {
+          <th>{{ column }}</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (row of data; track row.LineId) {
+        <tr>
+          @for (column of columns; track column) {
+            @if (row[column] !== undefined) {
+              <td>{{ row[column] }}</td>
+            }
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
