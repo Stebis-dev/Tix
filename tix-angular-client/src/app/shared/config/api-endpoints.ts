@@ -15,6 +15,10 @@ export const SERVER = {
       search: '/v1/library/search',
       externalMovies: '/v1/library/external-movies',
     },
+    logs: {
+      logs: '/v1/logs',
+      columns: '/v1/logs-columns',
+    },
   },
 };
 
@@ -69,4 +73,12 @@ export function getLibrarySearch(_query: string, _types: string, _providers: str
 
 export function getAuditLogs(_id: string): string {
   return `${SERVER.baseUrl}${SERVER.endpoints.movies.movies}/${_id}/logs`;
+}
+
+export function getLogColumns(): string {
+  return `${SERVER.baseUrl}${SERVER.endpoints.logs.columns}`;
+}
+
+export function getLogsOnPage(page: number): string {
+  return `${SERVER.baseUrl}${SERVER.endpoints.logs.logs}?page=${page}&limit=50`;
 }

@@ -5,6 +5,7 @@ import { EmptyLayoutComponent } from '@ntx-core/layouts/empty-layout/empty-layou
 import { ErrorPageComponent } from '@ntx-pages/error-page/error-page.component';
 import { MovieListComponent } from '@ntx-pages/movie-list/movie-list.component';
 import { ViewMovieComponent } from './pages/view-movie/view-movie.component';
+import { LogListComponent } from './pages/log-list/log-list.component';
 
 export const routes: Routes = [
   {
@@ -20,6 +21,11 @@ export const routes: Routes = [
       { path: '', redirectTo: '/error/404', pathMatch: 'full' },
       { path: ':id', component: ViewMovieComponent },
     ],
+  },
+  {
+    path: 'logs',
+    component: MainLayoutComponent,
+    children: [{ path: '', component: LogListComponent, pathMatch: 'full' }],
   },
   {
     path: 'error',

@@ -130,3 +130,18 @@ C --> |Get data|D[(MongoDB Atlas)]
 }
 ```
 
+## Import data to Atlas MongoDB from local Docker container
+Export the data from the database into a BSON file
+```cmd
+docker exec -it <container name> mongodump --db test --out /tmp/dump 
+```
+Copy the data to your local machine
+```cmd
+docker cp mongodb-modern-db:/tmp/dump ./dump
+```
+Send the data to the Atlas cluster database
+```cmd
+mongorestore --uri  mongodb+srv://<cluster-account-username>:<cluster-account-password>@<cluser-name>.ifx3o.mongodb.net ./<bson file>
+```
+
+
