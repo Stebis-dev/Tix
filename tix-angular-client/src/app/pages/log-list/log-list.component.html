@@ -8,7 +8,7 @@
       </tr>
     </thead>
     <tbody>
-      @for (row of data; track row.LineId) {
+      @for (row of logs; track row.LineId) {
         <tr>
           @for (column of columns; track column) {
             @if (row[column] !== undefined) {
