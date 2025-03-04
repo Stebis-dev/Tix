@@ -57,7 +57,7 @@ export async function connectToDatabase(): Promise<snowflake.Connection> {
 export async function fetchAllTables(snowConnect: snowflake.Connection, limit: number, offset: number): Promise<TableData[]> {
     return new Promise((resolve, reject) => {
         snowConnect.execute({
-            sqlText: `SELECT * FROM ND2.PUBLIC.ZOOKEEPER ORDER BY DATE DESC, TIME DESC LIMIT ${limit} OFFSET ${offset}`,
+            sqlText: `SELECT * FROM ND2.PUBLIC.LOGS_TABLE ORDER BY DATE DESC, TIME DESC LIMIT ${limit} OFFSET ${offset}`,
             complete: function (err, stmt, rows) {
                 if (err) {
                     console.error('Failed to execute statement due to the following error: ' + err.message);
