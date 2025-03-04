@@ -57,7 +57,7 @@ export async function connectToDatabase(): Promise<snowflake.Connection> {
 export async function fetchAllTables(snowConnect: snowflake.Connection, limit: number, offset: number): Promise<TableData[]> {
     return new Promise((resolve, reject) => {
         snowConnect.execute({
-            sqlText: `SELECT * FROM ND2.PUBLIC.ZOOKEEPER LIMIT ${limit} OFFSET ${offset}`,
+            sqlText: `SELECT * FROM ND2.PUBLIC.ZOOKEEPER ORDER BY DATE DESC, TIME DESC LIMIT ${limit} OFFSET ${offset}`,
             complete: function (err, stmt, rows) {
                 if (err) {
                     console.error('Failed to execute statement due to the following error: ' + err.message);
@@ -82,7 +82,7 @@ export async function fetchAllTables(snowConnect: snowflake.Connection, limit: n
 }
 
 export async function getColumns(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
-    const columns = ['LineId', 'Date', 'Time', 'Level', 'Node', 'Component', 'Content', 'Duration_ms'];
+    const columns = ['LineId', 'Date', 'Time', 'Level', 'Node', 'Component', 'Content', 'Duration ms'];
     return {
         body: JSON.stringify(columns, null, 2),
     };
