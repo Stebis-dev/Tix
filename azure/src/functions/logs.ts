@@ -82,7 +82,7 @@ export async function fetchAllTables(snowConnect: snowflake.Connection, limit: n
 }
 
 export async function getColumns(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
-    const columns = ['LineId', 'Date', 'Time', 'Level', 'Node', 'Component', 'Content', 'Duration ms'];
+    const columns = ['LineId', 'Date', 'Time', 'Level', 'Node', 'Component', 'Content', 'Duration_ms'];
     return {
         body: JSON.stringify(columns, null, 2),
     };
