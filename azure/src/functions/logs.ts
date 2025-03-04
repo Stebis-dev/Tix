@@ -28,7 +28,7 @@ export async function logs(request: HttpRequest, context: InvocationContext): Pr
     const tables = await fetchAllTables(snowConnect, limit, offset);
 
     return {
-        body: JSON.stringify(tables, null, 2),
+        body: JSON.stringify({ logs: tables, page: page, totalPages: 9999 }, null, 2),
     };
 }
 
